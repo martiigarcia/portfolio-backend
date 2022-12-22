@@ -17,9 +17,6 @@ public class Course {
     private Date beginning;
     private Date ending;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "id_user")
-    private List<User> participants = new ArrayList<>();
 
     protected Course() {
 
@@ -32,13 +29,8 @@ public class Course {
         this.ending = ending;
     }
 
-    public Course(String name, String description, Date beginning, Date ending, List<User> participants) {
+    public Course(String name, String description, Date beginning, Date ending, Long id) {
         this(name, description, beginning, ending);
-        this.participants = participants;
-    }
-
-    public Course(String name, String description, Date beginning, Date ending, List<User> participants, Long id) {
-        this(name, description, beginning, ending, participants);
         this.id = id;
     }
 
@@ -82,12 +74,5 @@ public class Course {
         this.ending = ending;
     }
 
-    public List<User> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<User> participants) {
-        this.participants = participants;
-    }
 
 }

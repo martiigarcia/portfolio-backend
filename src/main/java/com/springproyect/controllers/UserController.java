@@ -12,10 +12,6 @@ public class UserController {
     @Autowired
     private IUserService iUserService;
 
-//    public UserController(IUserService iUserService){
-//        this.iUserService = iUserService;
-//    }
-
     @GetMapping("/list")
     public String getUsers() {
         System.out.println("LIST");

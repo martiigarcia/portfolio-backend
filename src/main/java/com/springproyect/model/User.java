@@ -1,13 +1,13 @@
 package com.springproyect.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+import java.util.List;
+
+@Getter
+@Setter
 @Entity
 public class User {
 
@@ -23,7 +23,16 @@ public class User {
     private int age;
     private boolean isAdmin;
 
-    protected User(){
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    private List<Project> projectList;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    private List<Course> courseList;
+
+
+    protected User() {
 
     }
 
@@ -41,6 +50,17 @@ public class User {
         this(username, password, name, surname, email, age, isAdmin);
         this.id = id;
     }
+
+    public User(String username, String password, String name, String surname, String email, int age, boolean isAdmin, List<Project> projectList, List<Course> courseList) {
+        this(username, password, name, surname, email, age, isAdmin);
+        this.courseList = courseList;
+    }
+
+    public User(String username, String password, String name, String surname, String email, int age, boolean isAdmin, List<Project> projectList, List<Course> courseList, Long id) {
+        this(username, password, name, surname, email, age, isAdmin, projectList, courseList);
+        this.id = id;
+    }
+
 
     public Long getId() {
         return id;
@@ -104,6 +124,22 @@ public class User {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
     }
 
     @Override

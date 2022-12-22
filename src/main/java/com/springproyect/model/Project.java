@@ -18,10 +18,6 @@ public class Project {
     private Date beginning;
     private Date ending;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "id_user")
-    private List<User> participants = new ArrayList<>();
-
     protected Project() {
 
     }
@@ -33,13 +29,9 @@ public class Project {
         this.ending = ending;
     }
 
-    public Project(String name, String description, Date beginning, Date ending, List<User> participants) {
-        this(name, description, beginning, ending);
-        this.participants = participants;
-    }
 
-    public Project(String name, String description, Date beginning, Date ending, List<User> participants, Long id) {
-        this(name, description, beginning, ending, participants);
+    public Project(String name, String description, Date beginning, Date ending, Long id) {
+        this(name, description, beginning, ending);
         this.id = id;
     }
 
@@ -83,11 +75,4 @@ public class Project {
         this.ending = ending;
     }
 
-    public List<User> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<User> participants) {
-        this.participants = participants;
-    }
 }
