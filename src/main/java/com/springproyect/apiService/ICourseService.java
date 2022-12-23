@@ -7,12 +7,11 @@ import java.util.List;
 
 public interface ICourseService {
     
-    public void addCourse();
+    public void saveCourse(Course course);
 
     public Course findCourse(Long id);
 
     public List<Course> getCourses();
 
-//    public List<Course> getCoursesByUser(Long id_user);
 
 }

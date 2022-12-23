@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private String username;
+
     private String password;
     private String name;
     private String surname;
@@ -36,8 +37,7 @@ public class User {
 
     }
 
-    public User(String username, String password, String name, String surname, String email, int age, boolean isAdmin) {
-        this.username = username;
+    public User(String password, String name, String surname, String email, int age, boolean isAdmin) {
         this.password = password;
         this.name = name;
         this.surname = surname;
@@ -46,18 +46,19 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    public User(String username, String password, String name, String surname, String email, int age, boolean isAdmin, Long id) {
-        this(username, password, name, surname, email, age, isAdmin);
-        this.id = id;
-    }
+//    public User(String username, String password, String name, String surname, String email, int age, boolean isAdmin, Long id) {
+//        this(username, password, name, surname, email, age, isAdmin);
+//        this.id = id;
+//    }
 
-    public User(String username, String password, String name, String surname, String email, int age, boolean isAdmin, List<Project> projectList, List<Course> courseList) {
-        this(username, password, name, surname, email, age, isAdmin);
+    public User(String password, String name, String surname, String email, int age, boolean isAdmin, List<Project> projectList, List<Course> courseList) {
+        this(password, name, surname, email, age, isAdmin);
+        this.projectList = projectList;
         this.courseList = courseList;
     }
 
-    public User(String username, String password, String name, String surname, String email, int age, boolean isAdmin, List<Project> projectList, List<Course> courseList, Long id) {
-        this(username, password, name, surname, email, age, isAdmin, projectList, courseList);
+    public User(String password, String name, String surname, String email, int age, boolean isAdmin, List<Project> projectList, List<Course> courseList, Long id) {
+        this(password, name, surname, email, age, isAdmin, projectList, courseList);
         this.id = id;
     }
 
@@ -68,14 +69,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -122,7 +115,7 @@ public class User {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setIsAdmin(boolean admin) {
         isAdmin = admin;
     }
 
@@ -142,11 +135,61 @@ public class User {
         this.courseList = courseList;
     }
 
+    public void addProjectToList(Project project) {
+        this.projectList.add(project);
+    }
+
+    public void addCourseToList(Course course) {
+        this.courseList.add(course);
+    }
+    public boolean containsProject(Long id) {
+        boolean exist = false;
+        for (Project project : this.projectList) {
+            if (project.getId() == id) {
+                exist = true;
+            }
+        }
+        return exist;
+    }
+
+    public boolean containsCourse(Long id) {
+        boolean exist = false;
+        for (Course course : this.courseList) {
+            if (course.getId() == id) {
+                exist = true;
+            }
+        }
+        return exist;
+    }
+
+    public void removeCourse(Long id){
+        Course coursex = null;
+        for (Course course : this.courseList) {
+            if (course.getId() == id) {
+                coursex = course;
+            }
+        }
+        if(coursex != null){
+            this.courseList.remove(coursex);
+        }
+    }
+
+    public void removeProject(Long id){
+        Project projectx = null;
+        for (Project project : this.projectList) {
+            if (project.getId() == id) {
+                projectx = project;
+            }
+        }
+        if(projectx != null){
+            this.projectList.remove(projectx);
+        }
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +

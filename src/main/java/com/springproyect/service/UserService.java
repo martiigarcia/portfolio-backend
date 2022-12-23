@@ -34,6 +34,6 @@ public class UserService implements IUserService {
     @Override
     public User findUser(Long id) {
         User user = userRepository.findById(id).orElse(null);
-        return null;
+        return user;
     }
 }

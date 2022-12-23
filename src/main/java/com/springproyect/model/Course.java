@@ -14,23 +14,19 @@ public class Course {
 
     private String name;
     private String description;
-    private Date beginning;
-    private Date ending;
-
 
     protected Course() {
 
     }
 
-    public Course(String name, String description, Date beginning, Date ending) {
+    public Course(String name, String description) {
         this.name = name;
         this.description = description;
-        this.beginning = beginning;
-        this.ending = ending;
+
     }
 
-    public Course(String name, String description, Date beginning, Date ending, Long id) {
-        this(name, description, beginning, ending);
+    public Course(String name, String description, Long id) {
+        this(name, description);
         this.id = id;
     }
 
@@ -58,21 +54,12 @@ public class Course {
         this.description = description;
     }
 
-    public Date getBeginning() {
-        return beginning;
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
-
-    public void setBeginning(Date beginning) {
-        this.beginning = beginning;
-    }
-
-    public Date getEnding() {
-        return ending;
-    }
-
-    public void setEnding(Date ending) {
-        this.ending = ending;
-    }
-
-
 }

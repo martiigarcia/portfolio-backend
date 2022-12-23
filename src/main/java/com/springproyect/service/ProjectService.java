@@ -15,18 +15,20 @@ public class ProjectService implements IProjectService {
     private ProjectRepository projectRepository;
 
     @Override
-    public void addProject() {
-
+    public void saveProject(Project project) {
+        projectRepository.save(project);
     }
 
     @Override
     public Project findProject(Long id) {
-        return null;
+        Project project = projectRepository.findById(id).orElse(null);
+        return project;
     }
 
     @Override
     public List<Project> getProjects() {
-        return null;
+        List<Project> projectList = projectRepository.findAll();
+        return projectList;
     }
 
 

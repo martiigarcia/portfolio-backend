@@ -15,18 +15,20 @@ public class CourseService implements ICourseService {
     private CourseRepository courseRepository;
 
     @Override
-    public void addCourse() {
-
+    public void saveCourse(Course course) {
+        courseRepository.save(course);
     }
 
     @Override
     public Course findCourse(Long id) {
-        return null;
+        Course course = courseRepository.findById(id).orElse(null);
+        return course;
     }
 
     @Override
     public List<Course> getCourses() {
-        return null;
+        List<Course> courseList = courseRepository.findAll();
+        return courseList;
     }
 
 

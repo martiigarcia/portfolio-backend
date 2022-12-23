@@ -5,7 +5,10 @@ import com.springproyect.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/proyect")
@@ -14,25 +17,39 @@ public class ProjectController {
     @Autowired
     private IProjectService iProjectService;
 
+    @PostMapping("/save")
+    public void saveProject(@RequestBody Project project) {
+        iProjectService.saveProject(project);
+
+    }
+
     @GetMapping("/list")
-    public String getProjects() {
-        return "GET ALL";
+    public List<Project> getProjects() {
+        List<Project> projectList = iProjectService.getProjects();
+        return projectList;
     }
 
     @GetMapping("/find/{id}")
-    public String findProject(@PathVariable Long id) {
-        return "FIND";
+    public Project findProject(@PathVariable Long id) {
+        Project project = iProjectService.findProject(id);
+        return project;
     }
 
-    @GetMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public void updateProject(
             @PathVariable Long id,
-            @RequestParam("nombre") String name,
-            @RequestParam("descripcion") String description,
-            @RequestParam("fechaInicio") Date begging,
-            @RequestParam("fechaFin") Date ending
-    ) {
+            @RequestParam("name") String name,
+            @RequestParam("description") String description
+    ){
+
         //editar
+        Project project = iProjectService.findProject(id);
+
+        project.setName(name);
+        project.setDescription(description);
+
+        iProjectService.saveProject(project);
+
     }
 
 }

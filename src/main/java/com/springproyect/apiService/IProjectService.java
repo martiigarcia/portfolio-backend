@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IProjectService {
 
-    public void addProject();
+    public void saveProject(Project project);
 
     public Project findProject(Long id);
 

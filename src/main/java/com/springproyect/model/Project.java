@@ -2,10 +2,6 @@ package com.springproyect.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 @Entity
 public class Project {
 
@@ -15,23 +11,19 @@ public class Project {
 
     private String name;
     private String description;
-    private Date beginning;
-    private Date ending;
 
     protected Project() {
 
     }
 
-    public Project(String name, String description, Date beginning, Date ending) {
+    public Project(String name, String description) {
         this.name = name;
         this.description = description;
-        this.beginning = beginning;
-        this.ending = ending;
     }
 
 
-    public Project(String name, String description, Date beginning, Date ending, Long id) {
-        this(name, description, beginning, ending);
+    public Project(String name, String description, Long id) {
+        this(name, description);
         this.id = id;
     }
 
@@ -59,20 +51,12 @@ public class Project {
         this.description = description;
     }
 
-    public Date getBeginning() {
-        return beginning;
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
-
-    public void setBeginning(Date beginning) {
-        this.beginning = beginning;
-    }
-
-    public Date getEnding() {
-        return ending;
-    }
-
-    public void setEnding(Date ending) {
-        this.ending = ending;
-    }
-
 }

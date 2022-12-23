@@ -17,21 +17,19 @@ public class ExtraExperience {
 
     private String title;
     private String description;
-    private Date date;
 
     protected ExtraExperience() {
 
     }
 
-    public ExtraExperience(User user, String title, String description, Date date) {
+    public ExtraExperience(User user, String title, String description) {
         this.user = user;
         this.title = title;
         this.description = description;
-        this.date = date;
     }
 
-    public ExtraExperience(User user, String title, String description, Date date, Long id) {
-        this(user, title, description, date);
+    public ExtraExperience(User user, String title, String description, Long id) {
+        this(user, title, description);
         this.id = id;
     }
 
@@ -48,6 +46,7 @@ public class ExtraExperience {
     }
 
     public void setUser(User user) {
+        System.out.println(user);
         this.user = user;
     }
 
@@ -67,11 +66,13 @@ public class ExtraExperience {
         this.description = description;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    @Override
+    public String toString() {
+        return "ExtraExperience{" +
+                "id=" + id +
+                ", user=" + user +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
