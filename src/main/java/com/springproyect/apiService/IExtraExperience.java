@@ -11,4 +11,6 @@ public interface IExtraExperience {
     public ExtraExperience findExperience(Long id);
 
     public List<ExtraExperience> getExperience();
+
+    public List<ExtraExperience> getExperienceByUser(Long id);
 }

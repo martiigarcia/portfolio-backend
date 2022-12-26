@@ -30,4 +30,10 @@ public class ExtraExperienceService implements IExtraExperience {
         List<ExtraExperience> extraExperienceList = extraExperienceRepository.findAll();
         return extraExperienceList;
     }
+
+    @Override
+    public List<ExtraExperience> getExperienceByUser(Long id) {
+        List<ExtraExperience> extraExperienceList = extraExperienceRepository.findExtraExperiencesByUser_Id(id);
+        return extraExperienceList;
+    }
 }

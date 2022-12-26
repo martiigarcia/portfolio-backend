@@ -5,10 +5,9 @@ import com.springproyect.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/proyect")
@@ -18,38 +17,83 @@ public class ProjectController {
     private IProjectService iProjectService;
 
     @PostMapping("/save")
-    public void saveProject(@RequestBody Project project) {
-        iProjectService.saveProject(project);
+    public Map<String, Object> saveProject(@RequestBody Project project) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            iProjectService.saveProject(project);
+            map.put("result", "success");
+            map.put("message", "El proyecto se guardo con exito");
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
 
+        return map;
     }
 
     @GetMapping("/list")
-    public List<Project> getProjects() {
-        List<Project> projectList = iProjectService.getProjects();
-        return projectList;
+    public Map<String, Object> getProjects() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Project> projectList = iProjectService.getProjects();
+            map.put("proyects", projectList);
+            map.put("result", "success");
+            map.put("message", "La operacion se realizo con exito");
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
     }
 
     @GetMapping("/find/{id}")
-    public Project findProject(@PathVariable Long id) {
-        Project project = iProjectService.findProject(id);
-        return project;
+    public Map<String, Object> findProject(@PathVariable Long id) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Project project = iProjectService.findProject(id);
+            if (project != null) {
+                map.put("proyect", project);
+                map.put("result", "success");
+                map.put("message", "La operacion se realizo con exito");
+            } else {
+                map.put("result", "error");
+                map.put("message", "Algo salio mal... No existe el proyecto solicitado");
+            }
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
     }
 
     @PutMapping("/update/{id}")
-    public void updateProject(
+    public Map<String, Object> updateProject(
             @PathVariable Long id,
             @RequestParam("name") String name,
             @RequestParam("description") String description
-    ){
+    ) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            //editar
+            Project project = iProjectService.findProject(id);
 
-        //editar
-        Project project = iProjectService.findProject(id);
+            if (project != null) {
+                project.setName(name);
+                project.setDescription(description);
 
-        project.setName(name);
-        project.setDescription(description);
+                iProjectService.saveProject(project);
+                map.put("result", "success");
+                map.put("message", "La informacion del proyecto se modifico con exito");
 
-        iProjectService.saveProject(project);
-
+            } else {
+                map.put("result", "error");
+                map.put("message", "Algo salio mal... No existe el proyecto solicitado");
+            }
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
     }
 
 }
