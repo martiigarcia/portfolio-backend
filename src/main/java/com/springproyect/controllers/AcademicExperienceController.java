@@ -1,29 +1,30 @@
 package com.springproyect.controllers;
 
-import com.springproyect.apiService.IExtraExperience;
-import com.springproyect.model.ExtraExperience;
+import com.springproyect.apiService.IAcademicExperienceService;
+import com.springproyect.model.AcademicExperience;
+import com.springproyect.model.WorkExperience;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/experience")
-public class ExtraExperienceController {
+@RequestMapping("/workExperience")
+public class AcademicExperienceController {
 
     @Autowired
-    private IExtraExperience iExtraExperience;
+    private IAcademicExperienceService iAcademicExperience;
 
     @PostMapping("/save")
-    public Map<String, Object> saveExperience(@RequestBody ExtraExperience extraExperience) {
+    public Map<String, Object> saveExperience(@RequestBody AcademicExperience academicExperience) {
         Map<String, Object> map = new HashMap<>();
         try {
-            iExtraExperience.saveExperience(extraExperience);
+            iAcademicExperience.saveExperience(academicExperience);
             map.put("result", "success");
-            map.put("message", "El experiencia se guardo con exito");
+            map.put("message", "El experiencia academica se guardo con exito");
         } catch (Exception e) {
             map.put("result", "error");
             map.put("message", "Algo salio mal... " + e.getMessage());
@@ -37,8 +38,8 @@ public class ExtraExperienceController {
     public Map<String, Object> getExperiences() {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<ExtraExperience> extraExperienceList = iExtraExperience.getExperience();
-            map.put("experiences", extraExperienceList);
+            List<AcademicExperience> academicExperienceList = iAcademicExperience.getExperiences();
+            map.put("experiences", academicExperienceList);
             map.put("result", "success");
             map.put("message", "La operacion se realizo con exito");
         } catch (Exception e) {
@@ -53,14 +54,14 @@ public class ExtraExperienceController {
         Map<String, Object> map = new HashMap<>();
         try {
 
-            ExtraExperience extraExperience = iExtraExperience.findExperience(id);
-            if (extraExperience != null) {
-                map.put("experience", extraExperience);
+            AcademicExperience academicExperience = iAcademicExperience.findExperience(id);
+            if (academicExperience != null) {
+                map.put("experience", academicExperience);
                 map.put("result", "success");
                 map.put("message", "La operacion se realizo con exito");
             } else {
                 map.put("result", "error");
-                map.put("message", "Algo salio mal... No existe la experiencia solicitada");
+                map.put("message", "Algo salio mal... No existe la experiencia laboral solicitada");
             }
         } catch (Exception e) {
             map.put("result", "error");
@@ -73,20 +74,22 @@ public class ExtraExperienceController {
     public Map<String, Object> updateExperience(
             @PathVariable Long id,
             @RequestParam("title") String title,
-            @RequestParam("description") String description
+            @RequestParam("period") String period,
+            @RequestParam("place") String place
     ) {
         //editar
         Map<String, Object> map = new HashMap<>();
         try {
-            ExtraExperience extraExperience = iExtraExperience.findExperience(id);
+            AcademicExperience academicExperience = iAcademicExperience.findExperience(id);
 
-            if (extraExperience != null) {
-                extraExperience.setTitle(title);
-                extraExperience.setDescription(description);
+            if (academicExperience != null) {
+                academicExperience.setTitle(title);
+                academicExperience.setPeriod(period);
+                academicExperience.setPlace(place);
 
-                iExtraExperience.saveExperience(extraExperience);
+                iAcademicExperience.saveExperience(academicExperience);
                 map.put("result", "success");
-                map.put("message", "La informacion de la experiencia del usuario se modifico con exito");
+                map.put("message", "La informacion de la experiencia laboral del usuario se modifico con exito");
 
             } else {
                 map.put("result", "error");
@@ -103,8 +106,8 @@ public class ExtraExperienceController {
     public Map<String, Object> getExperiencesByUser(@PathVariable Long id) {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<ExtraExperience> extraExperienceList = iExtraExperience.getExperience();
-            map.put("experiences", extraExperienceList);
+            List<AcademicExperience> academicExperienceList = iAcademicExperience.getExperienceByUser(id);
+            map.put("experiences", academicExperienceList);
             map.put("result", "success");
             map.put("message", "La operacion se realizo con exito");
         } catch (Exception e) {

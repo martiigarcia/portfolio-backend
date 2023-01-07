@@ -16,8 +16,7 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> getUsers() {
-        List<User> userList = userRepository.findAll();
-        return userList;
+        return userRepository.findAll();
     }
 
     @Override
@@ -33,7 +32,6 @@ public class UserService implements IUserService {
 
     @Override
     public User findUser(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        return user;
+        return userRepository.findById(id).orElse(null);
     }
 }

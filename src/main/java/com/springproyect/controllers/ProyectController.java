@@ -1,7 +1,7 @@
 package com.springproyect.controllers;
 
-import com.springproyect.apiService.IProjectService;
-import com.springproyect.model.Project;
+import com.springproyect.apiService.IProyectService;
+import com.springproyect.model.Proyect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,18 +9,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/proyect")
-public class ProjectController {
+public class ProyectController {
 
     @Autowired
-    private IProjectService iProjectService;
+    private IProyectService iProyectService;
 
     @PostMapping("/save")
-    public Map<String, Object> saveProject(@RequestBody Project project) {
+    public Map<String, Object> saveProyect(@RequestBody Proyect proyect) {
         Map<String, Object> map = new HashMap<>();
         try {
-            iProjectService.saveProject(project);
+            iProyectService.saveProyect(proyect);
             map.put("result", "success");
             map.put("message", "El proyecto se guardo con exito");
         } catch (Exception e) {
@@ -32,11 +33,11 @@ public class ProjectController {
     }
 
     @GetMapping("/list")
-    public Map<String, Object> getProjects() {
+    public Map<String, Object> getProyects() {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<Project> projectList = iProjectService.getProjects();
-            map.put("proyects", projectList);
+            List<Proyect> proyectList = iProyectService.getProyects();
+            map.put("proyects", proyectList);
             map.put("result", "success");
             map.put("message", "La operacion se realizo con exito");
         } catch (Exception e) {
@@ -50,9 +51,9 @@ public class ProjectController {
     public Map<String, Object> findProject(@PathVariable Long id) {
         Map<String, Object> map = new HashMap<>();
         try {
-            Project project = iProjectService.findProject(id);
-            if (project != null) {
-                map.put("proyect", project);
+            Proyect proyect = iProyectService.findProyect(id);
+            if (proyect != null) {
+                map.put("proyect", proyect);
                 map.put("result", "success");
                 map.put("message", "La operacion se realizo con exito");
             } else {
@@ -70,18 +71,20 @@ public class ProjectController {
     public Map<String, Object> updateProject(
             @PathVariable Long id,
             @RequestParam("name") String name,
-            @RequestParam("description") String description
+            @RequestParam("description") String description,
+            @RequestParam("period") String period
     ) {
         Map<String, Object> map = new HashMap<>();
         try {
             //editar
-            Project project = iProjectService.findProject(id);
+            Proyect proyect = iProyectService.findProyect(id);
 
-            if (project != null) {
-                project.setName(name);
-                project.setDescription(description);
+            if (proyect != null) {
+                proyect.setName(name);
+                proyect.setDescription(description);
+                proyect.setPeriod(period);
 
-                iProjectService.saveProject(project);
+                iProyectService.saveProyect(proyect);
                 map.put("result", "success");
                 map.put("message", "La informacion del proyecto se modifico con exito");
 

@@ -1,8 +1,7 @@
 package com.springproyect.controllers;
 
 import com.springproyect.apiService.IUserService;
-import com.springproyect.model.Course;
-import com.springproyect.model.Project;
+import com.springproyect.model.Proyect;
 import com.springproyect.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user")
 @RestController
 public class UserController {
@@ -122,7 +122,7 @@ public class UserController {
     @PutMapping("/addProyect/{id}")
     public Map<String, Object> addProyect(
             @PathVariable Long id,
-            @RequestBody Project project
+            @RequestBody Proyect project
     ) {
         Map<String, Object> map = new HashMap<>();
         try {
@@ -149,75 +149,22 @@ public class UserController {
         return map;
     }
 
-    @PutMapping("/addCourse/{id}")
-    public Map<String, Object> addCourse(
-            @PathVariable Long id,
-            @RequestBody Course course
-    ) {
-        Map<String, Object> map = new HashMap<>();
-        try {
-            User user = iUserService.findUser(id);
-            if (user != null) {
-                if (user.containsCourse(course.getId())) {
-                    map.put("result", "success");
-                    map.put("message", "El curso ya se encuentra en la lista del usuario");
-                } else {
-                    user.addCourseToList(course);
-                    iUserService.saveUser(user);
-                    map.put("result", "success");
-                    map.put("message", "El curso se agrego a la lista de cursos del usuario con exito");
-                }
-            } else {
-                map.put("result", "error");
-                map.put("message", "Algo salio mal... No existe el usuario solicitado");
-            }
-        } catch (Exception e) {
-            map.put("result", "error");
-            map.put("message", "Algo salio mal... " + e.getMessage());
-        }
-        return map;
-    }
-
     @PutMapping("/vaciar/{id}")
-    public Map<String, Object> clearProjectAndCourseList(@PathVariable Long id) {
+    public Map<String, Object> clearProjectList(@PathVariable Long id) {
         Map<String, Object> map = new HashMap<>();
         User user = iUserService.findUser(id);
-        user.setCourseList(null);
         user.setProjectList(null);
         iUserService.saveUser(user);
         map.put("result", "success");
-        map.put("message", "Las listas se vaciaron");
-        map.put("cursos", user.getCourseList());
+        map.put("message", "La lista se vacio");
         map.put("proyectos", user.getProjectList());
-        return map;
-    }
-
-    @PutMapping("/deleteCourse/{id}")
-    public Map<String, Object> deleteCourseFromList(
-            @PathVariable Long id,
-            @RequestBody Course course
-    ) {
-        Map<String, Object> map = new HashMap<>();
-        User user = iUserService.findUser(id);
-        try {
-            user.removeCourse(id);
-            iUserService.saveUser(user);
-
-            map.put("result", "success");
-            map.put("message", "Las listas se vaciaron");
-            map.put("cursos", user.getCourseList());
-
-        } catch (Exception e) {
-            map.put("result", "error");
-            map.put("message", "Algo salio mal... " + e.getMessage());
-        }
         return map;
     }
 
     @PutMapping("/deleteProyect/{id}")
     public Map<String, Object> deleteProyectFromList(
             @PathVariable Long id,
-            @RequestBody Project project
+            @RequestBody Proyect project
     ) {
         Map<String, Object> map = new HashMap<>();
         User user = iUserService.findUser(id);
@@ -236,5 +183,56 @@ public class UserController {
 
         return map;
     }
+
+
+//    @PutMapping("/addCourse/{id}")
+//    public Map<String, Object> addCourse(
+//            @PathVariable Long id,
+//            @RequestBody Course course
+//    ) {
+//        Map<String, Object> map = new HashMap<>();
+//        try {
+//            User user = iUserService.findUser(id);
+//            if (user != null) {
+//                if (user.containsCourse(course.getId())) {
+//                    map.put("result", "success");
+//                    map.put("message", "El curso ya se encuentra en la lista del usuario");
+//                } else {
+//                    user.addCourseToList(course);
+//                    iUserService.saveUser(user);
+//                    map.put("result", "success");
+//                    map.put("message", "El curso se agrego a la lista de cursos del usuario con exito");
+//                }
+//            } else {
+//                map.put("result", "error");
+//                map.put("message", "Algo salio mal... No existe el usuario solicitado");
+//            }
+//        } catch (Exception e) {
+//            map.put("result", "error");
+//            map.put("message", "Algo salio mal... " + e.getMessage());
+//        }
+//        return map;
+//    }
+//    @PutMapping("/deleteCourse/{id}")
+//    public Map<String, Object> deleteCourseFromList(
+//            @PathVariable Long id,
+//            @RequestBody Course course
+//    ) {
+//        Map<String, Object> map = new HashMap<>();
+//        User user = iUserService.findUser(id);
+//        try {
+//            user.removeCourse(id);
+//            iUserService.saveUser(user);
+//
+//            map.put("result", "success");
+//            map.put("message", "Las listas se vaciaron");
+//            map.put("cursos", user.getCourseList());
+//
+//        } catch (Exception e) {
+//            map.put("result", "error");
+//            map.put("message", "Algo salio mal... " + e.getMessage());
+//        }
+//        return map;
+//    }
 
 }

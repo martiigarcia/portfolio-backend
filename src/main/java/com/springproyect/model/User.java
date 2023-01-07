@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
 @Setter
@@ -16,49 +15,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-
     private String password;
     private String name;
     private String surname;
     private String email;
     private int age;
     private boolean isAdmin;
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
-    private List<Project> projectList;
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
-    private List<Course> courseList;
-
+    private String information;
 
     protected User() {
 
     }
 
-    public User(String password, String name, String surname, String email, int age, boolean isAdmin) {
+    public User(String password, String name, String surname, String email, int age, boolean isAdmin, String information) {
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.age = age;
         this.isAdmin = isAdmin;
+        this.information = information;
     }
 
-//    public User(String username, String password, String name, String surname, String email, int age, boolean isAdmin, Long id) {
-//        this(username, password, name, surname, email, age, isAdmin);
-//        this.id = id;
-//    }
-
-    public User(String password, String name, String surname, String email, int age, boolean isAdmin, List<Project> projectList, List<Course> courseList) {
-        this(password, name, surname, email, age, isAdmin);
-        this.projectList = projectList;
-        this.courseList = courseList;
-    }
-
-    public User(String password, String name, String surname, String email, int age, boolean isAdmin, List<Project> projectList, List<Course> courseList, Long id) {
-        this(password, name, surname, email, age, isAdmin, projectList, courseList);
+    public User(String password, String name, String surname, String email, int age, boolean isAdmin, String information, Long id) {
+        this(password, name, surname, email, age, isAdmin, information);
         this.id = id;
     }
 
@@ -119,71 +99,12 @@ public class User {
         isAdmin = admin;
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
+    public String getInformation() {
+        return information;
     }
 
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
-    }
-
-    public List<Course> getCourseList() {
-        return courseList;
-    }
-
-    public void setCourseList(List<Course> courseList) {
-        this.courseList = courseList;
-    }
-
-    public void addProjectToList(Project project) {
-        this.projectList.add(project);
-    }
-
-    public void addCourseToList(Course course) {
-        this.courseList.add(course);
-    }
-    public boolean containsProject(Long id) {
-        boolean exist = false;
-        for (Project project : this.projectList) {
-            if (project.getId() == id) {
-                exist = true;
-            }
-        }
-        return exist;
-    }
-
-    public boolean containsCourse(Long id) {
-        boolean exist = false;
-        for (Course course : this.courseList) {
-            if (course.getId() == id) {
-                exist = true;
-            }
-        }
-        return exist;
-    }
-
-    public void removeCourse(Long id){
-        Course coursex = null;
-        for (Course course : this.courseList) {
-            if (course.getId() == id) {
-                coursex = course;
-            }
-        }
-        if(coursex != null){
-            this.courseList.remove(coursex);
-        }
-    }
-
-    public void removeProject(Long id){
-        Project projectx = null;
-        for (Project project : this.projectList) {
-            if (project.getId() == id) {
-                projectx = project;
-            }
-        }
-        if(projectx != null){
-            this.projectList.remove(projectx);
-        }
+    public void setInformation(String information) {
+        this.information = information;
     }
 
     @Override
@@ -196,6 +117,45 @@ public class User {
                 ", email='" + email + '\'' +
                 ", age=" + age +
                 ", isAdmin=" + isAdmin +
+                ", information='" + information + '\'' +
                 '}';
     }
+
+//    public List<Project> getProjectList() {
+//        return projectList;
+//    }
+//
+//    public void setProjectList(List<Project> projectList) {
+//        this.projectList = projectList;
+//    }
+//
+//    public void addProjectToList(Project project) {
+//        this.projectList.add(project);
+//    }
+
+
+//    public boolean containsProject(Long id) {
+//        boolean exist = false;
+//        for (Project project : this.projectList) {
+//            if (project.getId() == id) {
+//                exist = true;
+//            }
+//        }
+//        return exist;
+//    }
+
+
+//    public void removeProject(Long id) {
+//        Project projectx = null;
+//        for (Project project : this.projectList) {
+//            if (project.getId() == id) {
+//                projectx = project;
+//            }
+//        }
+//        if (projectx != null) {
+//            this.projectList.remove(projectx);
+//        }
+//    }
+
+
 }
