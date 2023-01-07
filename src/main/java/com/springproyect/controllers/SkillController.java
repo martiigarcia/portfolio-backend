@@ -1,29 +1,30 @@
 package com.springproyect.controllers;
 
-import com.springproyect.apiService.ICourseService;
-import com.springproyect.model.Course;
+import com.springproyect.apiService.ISkillService;
+import com.springproyect.model.Proyect;
+import com.springproyect.model.Skill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/course")
-public class CourseController {
+@RequestMapping("/proyect")
+public class SkillController {
 
     @Autowired
-    private ICourseService iCourseService;
+    private ISkillService iSkillService;
 
     @PostMapping("/save")
-    public Map<String, Object> saveCourse(@RequestBody Course course) {
+    public Map<String, Object> saveSkill(@RequestBody Skill skill) {
         Map<String, Object> map = new HashMap<>();
         try {
-            iCourseService.saveCourse(course);
+            iSkillService.saveSkill(skill);
             map.put("result", "success");
-            map.put("message", "El proyecto se guardo con exito");
+            map.put("message", "La habilidad se guardo con exito");
         } catch (Exception e) {
             map.put("result", "error");
             map.put("message", "Algo salio mal... " + e.getMessage());
@@ -33,11 +34,11 @@ public class CourseController {
     }
 
     @GetMapping("/list")
-    public Map<String, Object> getCourses() {
+    public Map<String, Object> getSkill() {
         Map<String, Object> map = new HashMap<>();
         try {
-            List<Course> courseList = iCourseService.getCourses();
-            map.put("courses", courseList);
+            List<Skill> skillList = iSkillService.getSkill();
+            map.put("proyects", skillList);
             map.put("result", "success");
             map.put("message", "La operacion se realizo con exito");
         } catch (Exception e) {
@@ -48,18 +49,17 @@ public class CourseController {
     }
 
     @GetMapping("/find/{id}")
-    public Map<String, Object> findCourse(@PathVariable Long id) {
+    public Map<String, Object> findSkill(@PathVariable Long id) {
         Map<String, Object> map = new HashMap<>();
         try {
-
-            Course course = iCourseService.findCourse(id);
-            if (course != null) {
-                map.put("course", course);
+            Skill skill = iSkillService.findSkill(id);
+            if (skill != null) {
+                map.put("proyect", skill);
                 map.put("result", "success");
                 map.put("message", "La operacion se realizo con exito");
             } else {
                 map.put("result", "error");
-                map.put("message", "Algo salio mal... No existe el curso solicitado");
+                map.put("message", "Algo salio mal... No existe la habilidad solicitado");
             }
         } catch (Exception e) {
             map.put("result", "error");
@@ -69,33 +69,33 @@ public class CourseController {
     }
 
     @PutMapping("/update/{id}")
-    public Map<String, Object> updateCourse(
+    public Map<String, Object> updateSkill(
             @PathVariable Long id,
             @RequestParam("name") String name,
-            @RequestParam("description") String description
-    ) {
+            @RequestParam("percentage") String percentage
+            ) {
         Map<String, Object> map = new HashMap<>();
         try {
+            //editar
+            Skill skill = iSkillService.findSkill(id);
 
-            Course course = iCourseService.findCourse(id);
-            if (course != null) {
+            if (skill != null) {
+                skill.setTitle(name);
+                skill.setPercentage(percentage);
 
-                course.setName(name);
-                course.setDescription(description);
-
-                iCourseService.saveCourse(course);
+                iSkillService.saveSkill(skill);
                 map.put("result", "success");
-                map.put("message", "La informacion del curso se modifico con exito");
+                map.put("message", "La informacion la habilidad se modifico con exito");
 
             } else {
                 map.put("result", "error");
-                map.put("message", "Algo salio mal... No existe el curso solicitado");
+                map.put("message", "Algo salio mal... No existe la habilidad solicitado");
             }
         } catch (Exception e) {
             map.put("result", "error");
             map.put("message", "Algo salio mal... " + e.getMessage());
         }
         return map;
-
     }
+
 }
