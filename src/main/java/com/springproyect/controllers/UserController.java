@@ -119,72 +119,71 @@ public class UserController {
 
     }
 
-    @PutMapping("/addProyect/{id}")
-    public Map<String, Object> addProyect(
-            @PathVariable Long id,
-            @RequestBody Proyect project
-    ) {
-        Map<String, Object> map = new HashMap<>();
-        try {
-            User user = iUserService.findUser(id);
-
-            if (user != null) {
-                if (user.containsProject(project.getId())) {
-                    map.put("result", "success");
-                    map.put("message", "El proyecto ya se encuentra en la lista del usuario");
-                } else {
-                    user.addProjectToList(project);
-                    iUserService.saveUser(user);
-                    map.put("result", "success");
-                    map.put("message", "El proyecto se agrego a la lista de proyectos del usuario con exito");
-                }
-            } else {
-                map.put("result", "error");
-                map.put("message", "Algo salio mal... No existe el usuario solicitado");
-            }
-        } catch (Exception e) {
-            map.put("result", "error");
-            map.put("message", "Algo salio mal... " + e.getMessage());
-        }
-        return map;
-    }
-
-    @PutMapping("/vaciar/{id}")
-    public Map<String, Object> clearProjectList(@PathVariable Long id) {
-        Map<String, Object> map = new HashMap<>();
-        User user = iUserService.findUser(id);
-        user.setProjectList(null);
-        iUserService.saveUser(user);
-        map.put("result", "success");
-        map.put("message", "La lista se vacio");
-        map.put("proyectos", user.getProjectList());
-        return map;
-    }
-
-    @PutMapping("/deleteProyect/{id}")
-    public Map<String, Object> deleteProyectFromList(
-            @PathVariable Long id,
-            @RequestBody Proyect project
-    ) {
-        Map<String, Object> map = new HashMap<>();
-        User user = iUserService.findUser(id);
-        try {
-            user.removeProject(project.getId());
-            iUserService.saveUser(user);
-
-            map.put("result", "success");
-            map.put("message", "Las listas se vaciaron");
-            map.put("proyectos", user.getProjectList());
-
-        } catch (Exception e) {
-            map.put("result", "error");
-            map.put("message", "Algo salio mal... " + e.getMessage());
-        }
-
-        return map;
-    }
-
-
+//    @PutMapping("/addProyect/{id}")
+//    public Map<String, Object> addProyect(
+//            @PathVariable Long id,
+//            @RequestBody Proyect project
+//    ) {
+//        Map<String, Object> map = new HashMap<>();
+//        try {
+//            User user = iUserService.findUser(id);
+//
+//            if (user != null) {
+//                if (user.containsProject(project.getId())) {
+//                    map.put("result", "success");
+//                    map.put("message", "El proyecto ya se encuentra en la lista del usuario");
+//                } else {
+//                    user.addProjectToList(project);
+//                    iUserService.saveUser(user);
+//                    map.put("result", "success");
+//                    map.put("message", "El proyecto se agrego a la lista de proyectos del usuario con exito");
+//                }
+//            } else {
+//                map.put("result", "error");
+//                map.put("message", "Algo salio mal... No existe el usuario solicitado");
+//            }
+//        } catch (Exception e) {
+//            map.put("result", "error");
+//            map.put("message", "Algo salio mal... " + e.getMessage());
+//        }
+//        return map;
+//    }
+//
+//    @PutMapping("/vaciar/{id}")
+//    public Map<String, Object> clearProjectList(@PathVariable Long id) {
+//        Map<String, Object> map = new HashMap<>();
+//        User user = iUserService.findUser(id);
+//        user.setProjectList(null);
+//        iUserService.saveUser(user);
+//        map.put("result", "success");
+//        map.put("message", "La lista se vacio");
+//        map.put("proyectos", user.getProjectList());
+//        return map;
+//    }
+//
+//    @PutMapping("/deleteProyect/{id}")
+//    public Map<String, Object> deleteProyectFromList(
+//            @PathVariable Long id,
+//            @RequestBody Proyect project
+//    ) {
+//        Map<String, Object> map = new HashMap<>();
+//        User user = iUserService.findUser(id);
+//        try {
+//            user.removeProject(project.getId());
+//            iUserService.saveUser(user);
+//
+//            map.put("result", "success");
+//            map.put("message", "Las listas se vaciaron");
+//            map.put("proyectos", user.getProjectList());
+//
+//        } catch (Exception e) {
+//            map.put("result", "error");
+//            map.put("message", "Algo salio mal... " + e.getMessage());
+//        }
+//
+//        return map;
+//    }
+//
 //    @PutMapping("/addCourse/{id}")
 //    public Map<String, Object> addCourse(
 //            @PathVariable Long id,
