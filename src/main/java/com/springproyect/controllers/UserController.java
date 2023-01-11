@@ -88,7 +88,9 @@ public class UserController {
             @RequestParam("surname") String surname,
             @RequestParam("age") int age,
             @RequestParam("email") String email,
-            @RequestParam("password") String password
+            @RequestParam("password") String password,
+            @RequestParam("information") String information,
+            @RequestParam("admin") boolean admin
     ) {
         Map<String, Object> map = new HashMap<>();
         try {
@@ -101,6 +103,8 @@ public class UserController {
                 user.setAge(age);
                 user.setEmail(email);
                 user.setPassword(password);
+                user.setInformation(information);
+                user.setIsAdmin(admin);
 
                 iUserService.saveUser(user);
 
