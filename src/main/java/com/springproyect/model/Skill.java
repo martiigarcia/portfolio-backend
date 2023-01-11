@@ -10,7 +10,7 @@ public class Skill {
     private Long id;
 
     private String title;
-    private String percentage;
+    private double percentage;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -20,13 +20,13 @@ public class Skill {
 
     }
 
-    public Skill(String title, String percentage, User user) {
+    public Skill(String title, Double percentage, User user) {
         this.title = title;
         this.percentage = percentage;
         this.user = user;
     }
 
-    public Skill(String title, String percentage, User user, Long id) {
+    public Skill(String title, Double percentage, User user, Long id) {
         this(title, percentage, user);
         this.id = id;
     }
@@ -47,11 +47,11 @@ public class Skill {
         this.title = title;
     }
 
-    public String getPercentage() {
+    public Double getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(String percentage) {
+    public void setPercentage(Double percentage) {
         this.percentage = percentage;
     }
 

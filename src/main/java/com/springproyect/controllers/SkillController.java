@@ -86,8 +86,8 @@ public class SkillController {
     @PutMapping("/update/{id}")
     public Map<String, Object> updateSkill(
             @PathVariable Long id,
-            @RequestParam("name") String name,
-            @RequestParam("percentage") String percentage
+            @RequestParam("title") String title,
+            @RequestParam("percentage") Double percentage
             ) {
         Map<String, Object> map = new HashMap<>();
         try {
@@ -95,7 +95,7 @@ public class SkillController {
             Skill skill = iSkillService.findSkill(id);
 
             if (skill != null) {
-                skill.setTitle(name);
+                skill.setTitle(title);
                 skill.setPercentage(percentage);
 
                 iSkillService.saveSkill(skill);
