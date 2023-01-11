@@ -33,4 +33,9 @@ public class WorkExperienceService implements IWorkExperienceService {
     public List<WorkExperience> getExperienceByUser(Long id) {
         return workExperienceRepository.findExtraExperiencesByUser_Id(id);
     }
+
+    @Override
+    public void deleteWorkExperience(Long id) {
+        workExperienceRepository.deleteById(id);
+    }
 }

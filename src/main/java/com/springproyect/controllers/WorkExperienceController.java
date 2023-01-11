@@ -69,6 +69,20 @@ public class WorkExperienceController {
         return map;
     }
 
+    @DeleteMapping("/delete/{id}")
+    public Map<String, Object> deleteUser(@PathVariable Long id) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            iWorkExperience.deleteWorkExperience(id);
+            map.put("result", "success");
+            map.put("message", "La experiencia laboral se elimino con exito");
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
+    }
+
     @PutMapping("/update/{id}")
     public Map<String, Object> updateExperience(
             @PathVariable Long id,

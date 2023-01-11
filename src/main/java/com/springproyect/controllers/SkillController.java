@@ -3,6 +3,7 @@ package com.springproyect.controllers;
 import com.springproyect.apiService.ISkillService;
 import com.springproyect.model.Proyect;
 import com.springproyect.model.Skill;
+import com.springproyect.model.WorkExperience;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,6 +69,20 @@ public class SkillController {
         return map;
     }
 
+    @DeleteMapping("/delete/{id}")
+    public Map<String, Object> deleteSkill(@PathVariable Long id) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            iSkillService.deleteSkill(id);
+            map.put("result", "success");
+            map.put("message", "La habilidad se elimino con exito");
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
+    }
+
     @PutMapping("/update/{id}")
     public Map<String, Object> updateSkill(
             @PathVariable Long id,
@@ -98,4 +113,18 @@ public class SkillController {
         return map;
     }
 
+    @GetMapping("/byUser/{id}")
+    public Map<String, Object> getSkillsByUser(@PathVariable Long id) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Skill> skillList = iSkillService.getSkillsByUser(id);
+            map.put("skills", skillList);
+            map.put("result", "success");
+            map.put("message", "La operacion se realizo con exito");
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
+    }
 }

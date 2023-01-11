@@ -13,4 +13,6 @@ public interface IProyectService {
     List<Proyect> getProyects();
 
     public List<Proyect> getProyectsByUser(Long id_user);
+
+    void deleteProyect(Long id);
 }

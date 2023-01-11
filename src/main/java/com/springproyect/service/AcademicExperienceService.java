@@ -33,4 +33,11 @@ public class AcademicExperienceService implements IAcademicExperienceService {
     public List<AcademicExperience> getExperienceByUser(Long id) {
         return academicExperienceRepository.findAcademicExperiencesByUser_Id(id);
     }
+
+    @Override
+    public void deleteAcademicExperience(Long id) {
+//        AcademicExperience academicExperience = findExperience(id);
+//        academicExperienceRepository.delete(academicExperience);
+        academicExperienceRepository.deleteById(id);
+    }
 }

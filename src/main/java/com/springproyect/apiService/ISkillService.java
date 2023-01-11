@@ -13,5 +13,6 @@ public interface ISkillService {
 
     List<Skill> getSkillsByUser(Long id);
 
+    void deleteSkill(Long id);
 
 }

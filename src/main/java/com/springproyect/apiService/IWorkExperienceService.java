@@ -13,4 +13,6 @@ public interface IWorkExperienceService {
     List<WorkExperience> getExperiences();
 
     List<WorkExperience> getExperienceByUser(Long id);
+
+    void deleteWorkExperience(Long id);
 }

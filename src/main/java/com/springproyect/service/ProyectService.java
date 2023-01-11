@@ -34,5 +34,10 @@ public class ProyectService implements IProyectService {
         return proyectRepository.findProyectsByUser_Id(id_user);
     }
 
+    @Override
+    public void deleteProyect(Long id) {
+        proyectRepository.deleteById(id);
+    }
+
 
 }

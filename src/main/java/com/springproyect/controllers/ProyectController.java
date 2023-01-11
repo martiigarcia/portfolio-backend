@@ -2,6 +2,7 @@ package com.springproyect.controllers;
 
 import com.springproyect.apiService.IProyectService;
 import com.springproyect.model.Proyect;
+import com.springproyect.model.Skill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,6 +68,20 @@ public class ProyectController {
         return map;
     }
 
+    @DeleteMapping("/delete/{id}")
+    public Map<String, Object> deleteUser(@PathVariable Long id) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            iProyectService.deleteProyect(id);
+            map.put("result", "success");
+            map.put("message", "El proyecto se elimino con exito");
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
+    }
+
     @PutMapping("/update/{id}")
     public Map<String, Object> updateProject(
             @PathVariable Long id,
@@ -98,5 +113,18 @@ public class ProyectController {
         }
         return map;
     }
-
+    @GetMapping("/byUser/{id}")
+    public Map<String, Object> getProyectsByUser(@PathVariable Long id) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            List<Proyect> proyectList = iProyectService.getProyectsByUser(id);
+            map.put("proyects", proyectList);
+            map.put("result", "success");
+            map.put("message", "La operacion se realizo con exito");
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
+    }
 }

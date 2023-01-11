@@ -13,4 +13,6 @@ public interface IAcademicExperienceService {
     List<AcademicExperience> getExperiences();
 
     List<AcademicExperience> getExperienceByUser(Long id);
+
+    void deleteAcademicExperience(Long id);
 }
