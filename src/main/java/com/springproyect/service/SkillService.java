@@ -31,7 +31,10 @@ public class SkillService implements ISkillService {
 
     @Override
     public List<Skill> getSkillsByUser(Long id) {
-        return skillRepository.findSkillsByUser_Id(id);
+
+//        return skillRepository.findSkillsByUser_Id(id);
+        return skillRepository.findSkillsByUser_IdOrderByPercentageDesc(id);
+
     }
 
     @Override

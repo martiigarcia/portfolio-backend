@@ -8,4 +8,5 @@ import java.util.List;
 public interface SkillRepository extends JpaRepository<Skill, Long> {
 
     List<Skill> findSkillsByUser_Id(Long id);
+    List<Skill> findSkillsByUser_IdOrderByPercentageDesc(Long id);
 }
