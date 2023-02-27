@@ -2,8 +2,10 @@ package com.springproyect.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
-public class AcademicExperience {
+public class AcademicExperience implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;

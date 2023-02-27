@@ -89,7 +89,8 @@ public class AcademicExperienceController {
             @PathVariable Long id,
             @RequestParam("title") String title,
             @RequestParam("period") String period,
-            @RequestParam("place") String place
+            @RequestParam("place") String place,
+            @RequestParam("type") String type
     ) {
         //editar
         Map<String, Object> map = new HashMap<>();
@@ -100,6 +101,7 @@ public class AcademicExperienceController {
                 academicExperience.setTitle(title);
                 academicExperience.setPeriod(period);
                 academicExperience.setPlace(place);
+                academicExperience.setType(type);
 
                 iAcademicExperience.saveExperience(academicExperience);
                 map.put("result", "success");

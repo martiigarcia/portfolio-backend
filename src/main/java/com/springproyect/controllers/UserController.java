@@ -89,21 +89,31 @@ public class UserController {
             @RequestParam("age") int age,
             @RequestParam("email") String email,
             @RequestParam("password") String password,
-            @RequestParam("information") String information,
             @RequestParam("admin") boolean admin
     ) {
         Map<String, Object> map = new HashMap<>();
+
+        System.out.println(id);
+        System.out.println(name);
+        System.out.println(surname);
+        System.out.println(age);
+        System.out.println(email);
+        System.out.println(password);
+        System.out.println(admin);
+
+
         try {
+
 
             User user = iUserService.findUser(id);
             if (user != null) {
+                System.out.println(user);
 
                 user.setName(name);
                 user.setSurname(surname);
                 user.setAge(age);
                 user.setEmail(email);
                 user.setPassword(password);
-                user.setInformation(information);
                 user.setIsAdmin(admin);
 
                 iUserService.saveUser(user);
@@ -122,6 +132,71 @@ public class UserController {
         return map;
 
     }
+
+    @PutMapping("/updateInformation/{id}")
+    public Map<String, Object> updateInformation(
+            @PathVariable Long id,
+            @RequestBody String information
+    ) {
+        Map<String, Object> map = new HashMap<>();
+
+        System.out.println(id);
+        System.out.println(information);
+
+        try {
+
+
+            User user = iUserService.findUser(id);
+            if (user != null) {
+                System.out.println(user);
+
+              user.setInformation(information);
+
+                iUserService.saveUser(user);
+
+                map.put("result", "success");
+                map.put("message", "La informacion del usuario se modifico con exito");
+
+            } else {
+                map.put("result", "error");
+                map.put("message", "Algo salio mal... No existe el usuario solicitado");
+            }
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
+
+    }
+
+    /*@PutMapping("/update/{id}")
+    public Map<String, Object> updateUser(
+            @PathVariable Long id,
+            @RequestBody User userX
+    ) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            System.out.println(userX);
+            User user = iUserService.findUser(id);
+            if (user != null) {
+
+                iUserService.saveUser(userX);
+
+                map.put("result", "success");
+                map.put("message", "La informacion del usuario se modifico con exito");
+
+            } else {
+                map.put("result", "error");
+                map.put("message", "Algo salio mal... No existe el usuario solicitado");
+            }
+        } catch (Exception e) {
+            map.put("result", "error");
+            map.put("message", "Algo salio mal... " + e.getMessage());
+        }
+        return map;
+
+    }*/
+
 
 //    @PutMapping("/addProyect/{id}")
 //    public Map<String, Object> addProyect(

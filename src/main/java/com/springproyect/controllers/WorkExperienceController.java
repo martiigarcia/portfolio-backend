@@ -3,11 +3,13 @@ package com.springproyect.controllers;
 import com.springproyect.apiService.IWorkExperienceService;
 import com.springproyect.model.WorkExperience;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -17,8 +19,9 @@ public class WorkExperienceController {
     @Autowired
     private IWorkExperienceService iWorkExperience;
 
-    @PostMapping("/save")
+    @PostMapping(path = "/save", consumes ="application/json")
     public Map<String, Object> saveExperience(@RequestBody WorkExperience workExperience) {
+        System.out.println(workExperience);
         Map<String, Object> map = new HashMap<>();
         try {
             iWorkExperience.saveExperience(workExperience);

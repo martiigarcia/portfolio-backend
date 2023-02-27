@@ -2,8 +2,10 @@ package com.springproyect.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
-public class Skill {
+public class Skill implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

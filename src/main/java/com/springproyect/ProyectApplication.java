@@ -3,6 +3,7 @@ package com.springproyect;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 import java.util.Collections;
 
 @SpringBootApplication
@@ -16,4 +17,5 @@ public class ProyectApplication {
                 .singletonMap("server.port", "8090"));
         app.run(args);
     }
+
 }

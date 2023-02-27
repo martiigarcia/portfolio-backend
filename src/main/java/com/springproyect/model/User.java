@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,6 +22,8 @@ public class User {
     private String email;
     private int age;
     private boolean isAdmin;
+
+    @Column(columnDefinition = "varchar(1026)")
     private String information;
 
     protected User() {

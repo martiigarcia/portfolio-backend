@@ -1,9 +1,15 @@
 package com.springproyect.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
 
 @Entity
-public class WorkExperience {
+@Getter
+@Setter
+public class WorkExperience implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -18,7 +24,7 @@ public class WorkExperience {
     private String period;
     private String place;
 
-    protected WorkExperience() {
+    public WorkExperience() {
 
     }
 
