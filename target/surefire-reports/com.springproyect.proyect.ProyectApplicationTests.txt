@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.springproyect.proyect.ProyectApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 88.942 s - in com.springproyect.proyect.ProyectApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 90.872 s - in com.springproyect.proyect.ProyectApplicationTests
